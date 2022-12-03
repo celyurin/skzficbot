@@ -67,8 +67,8 @@ var pairing = [
     "🦊🐶"
 ];
 
-//setInterval(main, 180000); //3 minutos por el límite de llamadas este
-setInterval(main, 3000); //3 segundos para pruebas
+setInterval(main, 180000); //3 minutos por el límite de llamadas este
+//setInterval(main, 3000); //3 segundos para pruebas
 
 function writeParams(data) {
     console.log("We are writing the params file ...", data);
