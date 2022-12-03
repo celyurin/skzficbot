@@ -126,7 +126,7 @@ async function main() {
                     replyTemplates[3] = "hope you're hungry, @" + userHandle + ", because here's some food: ";
                     var textToReply = TWEETS_TO_REPLY[found][Math.floor(Math.random() * TWEETS_TO_REPLY[found].length)];
                     let replyText = replyTemplates [Math.floor(Math.random() * replyTemplates.length)];
-                    textToReply = replyText + textToReply + "#" + count;
+                    textToReply = replyText + textToReply + " #" + count;
                     count++;
                     twit.post('statuses/update', { status: textToReply, in_reply_to_status_id: id }, function (err, response) {
                         if (err) {
@@ -140,7 +140,8 @@ async function main() {
                     //if the query is wrong, we reply with a random fic from my bookmarks
                     var userHandle = tweet.user.screen_name;
                     var textToReply = badQuery[Math.floor(Math.random() * badQuery.length)];
-                    textToReply = "sorry @" + userHandle + ", we couldn't get your order right 😵‍💫 but not to worry! here's one personal favourite for you to enjoy!: " + textToReply;
+                    textToReply = "sorry @" + userHandle + ", we couldn't get your order right 😵‍💫 but not to worry! here's one personal favourite for you to enjoy!: " + textToReply + " #" + count;
+                    count++;
                     twit.post('statuses/update', { status: textToReply, in_reply_to_status_id: id }, function (err, response) {
                         if (err) {
                             console.log("> Error: Status could not be updated. " + err);
