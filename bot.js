@@ -5,7 +5,7 @@ const path = require("path");
 const paramsPath = path.join(__dirname, "params.json");
 const TWEETS_TO_REPLY = require('./fics');
 const badQuery = require('./badquery-fics');
-var count = 0;
+var cont = 0;
 
 
 var pairing = [
@@ -67,8 +67,8 @@ var pairing = [
     "🦊🐶"
 ];
 
-setInterval(main, 180000); //3 minutos por el límite de llamadas este
-//setInterval(main, 3000); //3 segundos para pruebas
+//setInterval(main, 180000); //3 minutos por el límite de llamadas este
+setInterval(main, 3000); //3 segundos para pruebas
 
 function writeParams(data) {
     console.log("We are writing the params file ...", data);
@@ -84,7 +84,8 @@ function readParams() {
 function getTweets(since_id) {
     return new Promise((resolve, reject) => {
         let params = {
-            q: "@skzficbot"
+            q: "@skzficbot",
+            count: 10
         };
         if (since_id) {
             params.since_id = since_id;
@@ -126,8 +127,8 @@ async function main() {
                     replyTemplates[3] = "hope you're hungry, @" + userHandle + ", because here's some food: ";
                     var textToReply = TWEETS_TO_REPLY[found][Math.floor(Math.random() * TWEETS_TO_REPLY[found].length)];
                     let replyText = replyTemplates [Math.floor(Math.random() * replyTemplates.length)];
-                    textToReply = replyText + textToReply + " #" + count;
-                    count++;
+                    textToReply = replyText + textToReply + " #" + cont;
+                    cont++;
                     twit.post('statuses/update', { status: textToReply, in_reply_to_status_id: id }, function (err, response) {
                         if (err) {
                             console.log("> Error: Status could not be updated. " + err);
@@ -140,8 +141,8 @@ async function main() {
                     //if the query is wrong, we reply with a random fic from my bookmarks
                     var userHandle = tweet.user.screen_name;
                     var textToReply = badQuery[Math.floor(Math.random() * badQuery.length)];
-                    textToReply = "sorry @" + userHandle + ", we couldn't get your order right 😵‍💫 but not to worry! here's one personal favourite for you to enjoy!: " + textToReply + " #" + count;
-                    count++;
+                    textToReply = "sorry @" + userHandle + ", we couldn't get your order right 😵‍💫 but not to worry! here's one personal favourite for you to enjoy!: " + textToReply + " #" + cont;
+                    cont++;
                     twit.post('statuses/update', { status: textToReply, in_reply_to_status_id: id }, function (err, response) {
                         if (err) {
                             console.log("> Error: Status could not be updated. " + err);
